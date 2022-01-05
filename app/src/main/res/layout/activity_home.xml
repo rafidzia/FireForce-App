@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="17.5dp"
+        android:src="@drawable/ic_baseline_location_on_30"></ImageView>
+
+    <TextView
+        android:id="@+id/place_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="41dp"
+        android:layout_marginTop="20dp"
+        android:text="Gedung ABC"
+        android:textSize="20dp"></TextView>
+
+    <ImageButton
+        android:id="@+id/user_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/ic_baseline_settings_30"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:layout_margin="10dp"></ImageButton>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:id="@+id/user_fire_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/circlecorner"
+            android:elevation="10dp"
+            android:src="@drawable/ic_baseline_check_circle_200"></ImageView>
+
+        <TextView
+            android:id="@+id/user_status_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/user_fire_status"
+            android:layout_margin="20dp"
+            android:text="Kondisi Aman"
+            android:textAlignment="center"
+            android:textSize="30dp"></TextView>
+
+        <Button
+            android:id="@+id/user_check_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/user_status_detail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="20dp"
+            android:text="Cek Detail"
+            android:visibility="visible">
+        </Button>
+
+        <Button
+            android:id="@+id/user_fireman_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/user_check_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="20dp"
+            android:text="Cek Pemadam Kebakaran"
+            android:visibility="invisible"></Button>
+
+    </RelativeLayout>
+
+
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EmergencyFiremanActivity"
+    android:background="@color/purple_500">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:id="@+id/warning_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/circlecorner"
+            android:elevation="10dp"
+            android:paddingBottom="36dp"
+            android:paddingHorizontal="18dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/ic_baseline_warning_200"></ImageView>
+
+        <TextView
+            android:id="@+id/warning_fireman_status_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/warning_icon"
+            android:layout_margin="20dp"
+            android:text="Terjadi Kebakaran di Gedung A"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="30dp"></TextView>
+
+        <Button
+            android:id="@+id/warning_fireman_exec_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/warning_fireman_status_detail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="20dp"
+            android:backgroundTint="@color/white"
+            android:text="Eksekusi"
+            android:textColor="@color/black"
+            android:visibility="visible"></Button>
+
+    </RelativeLayout>
+
+
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">FireForce</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="title_activity_maps_fireman">MapsFiremanActivity</string>
+    <string name="GPSAlertDialogTitle" />
+    <string name="GPSAlertDialogMessage" />
+    <string name="action_settings" />
+    <string name="cancel" />
+</resources>

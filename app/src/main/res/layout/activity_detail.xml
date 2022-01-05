@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailActivity">
+    <TextView
+        android:id="@+id/room_detail_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Detail Ruangan"
+        android:layout_marginVertical="20dp"
+        android:textSize="20dp"
+        android:gravity="center_horizontal">
+
+    </TextView>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/room_detail_title"
+        android:layout_marginBottom="110dp">
+        <RelativeLayout
+            android:id="@+id/detail_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Menunggu Data"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="20dp">
+
+            </TextView>
+<!--            <TextView-->
+<!--                android:id="@+id/lt1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="10dp"-->
+<!--                android:layout_marginBottom="-10dp"-->
+<!--                android:text="Lt.1"-->
+<!--                android:textSize="15dp">-->
+<!--            </TextView>-->
+<!--            <HorizontalScrollView-->
+<!--                android:id="@+id/hs1"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@id/lt1"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:scrollbars="none">-->
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    android:paddingHorizontal="10dp">-->
+<!--                    <TextView-->
+<!--                        android:layout_width="70dp"-->
+<!--                        android:layout_height="100dp"-->
+<!--                        android:layout_marginHorizontal="7dp"-->
+<!--                        android:layout_marginVertical="10dp"-->
+<!--                        android:background="@drawable/roundcorner"-->
+<!--                        android:elevation="5dp"-->
+<!--                        android:gravity="center_vertical|center_horizontal"-->
+<!--                        android:padding="5dp"-->
+<!--                        android:text="Ruang Bersatu"-->
+<!--                        ></TextView>-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="70dp"-->
+<!--                        android:layout_height="100dp"-->
+<!--                        android:layout_marginHorizontal="7dp"-->
+<!--                        android:layout_marginVertical="10dp"-->
+<!--                        android:background="@drawable/roundcorner"-->
+<!--                        android:elevation="5dp"-->
+<!--                        android:gravity="center_vertical|center_horizontal"-->
+<!--                        android:padding="5dp"-->
+<!--                        android:text="Ruang Bersatu"-->
+<!--                        ></TextView>-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="70dp"-->
+<!--                        android:layout_height="100dp"-->
+<!--                        android:layout_marginHorizontal="7dp"-->
+<!--                        android:layout_marginVertical="10dp"-->
+<!--                        android:background="@drawable/roundcorner"-->
+<!--                        android:elevation="5dp"-->
+<!--                        android:gravity="center_vertical|center_horizontal"-->
+<!--                        android:padding="5dp"-->
+<!--                        android:text="Ruang Bersatu"></TextView>-->
+<!--                    <TextView-->
+<!--                        android:layout_width="70dp"-->
+<!--                        android:layout_height="100dp"-->
+<!--                        android:layout_marginHorizontal="7dp"-->
+<!--                        android:layout_marginVertical="10dp"-->
+<!--                        android:background="@drawable/roundcorner"-->
+<!--                        android:elevation="5dp"-->
+<!--                        android:gravity="center_vertical|center_horizontal"-->
+<!--                        android:padding="5dp"-->
+<!--                        android:text="Ruang Bersatu"></TextView>-->
+<!--                    <TextView-->
+<!--                        android:layout_width="70dp"-->
+<!--                        android:layout_height="100dp"-->
+<!--                        android:layout_marginHorizontal="7dp"-->
+<!--                        android:layout_marginVertical="10dp"-->
+<!--                        android:background="@drawable/roundcorner"-->
+<!--                        android:elevation="5dp"-->
+<!--                        android:gravity="center_vertical|center_horizontal"-->
+<!--                        android:padding="5dp"-->
+<!--                        android:text="Ruang Bersatu"></TextView>-->
+<!--                    <TextView-->
+<!--                        android:layout_width="70dp"-->
+<!--                        android:layout_height="100dp"-->
+<!--                        android:layout_marginHorizontal="7dp"-->
+<!--                        android:layout_marginVertical="10dp"-->
+<!--                        android:background="@drawable/roundcorner"-->
+<!--                        android:elevation="5dp"-->
+<!--                        android:gravity="center_vertical|center_horizontal"-->
+<!--                        android:padding="5dp"-->
+<!--                        android:text="Ruang Bersatu"></TextView>-->
+
+
+
+<!--                </LinearLayout>-->
+<!--            </HorizontalScrollView>-->
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="20dp"
+        android:layout_centerHorizontal="true"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/firesmoke"
+            android:layout_marginBottom="10dp">
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@color/firesmoke"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Terdeteksi Kebakaran (Api dan Asap)"
+                android:layout_marginLeft="10dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/fire"
+            android:layout_below="@id/firesmoke"
+            android:layout_marginBottom="10dp">
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@color/fire"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Terdeteksi Api"
+                android:layout_marginLeft="10dp"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/smoke"
+            android:layout_below="@id/fire"
+            android:layout_marginBottom="10dp">
+            <ImageButton
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@color/smoke"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Terdeteksi Asap"
+                android:layout_marginLeft="10dp"
+                />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

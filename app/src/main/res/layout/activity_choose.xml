@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChooseActivity">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:id="@+id/choose_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose Your App"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:layout_marginBottom="10dp"></TextView>
+
+        <RelativeLayout
+            android:id="@+id/choose_options"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/choose_title">
+            <RelativeLayout
+                android:id="@+id/choose_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:outlineProvider="bounds"
+                android:layout_margin="11dp"
+                android:padding="10dp"
+                android:background="@drawable/roundcorner">
+                <ImageButton
+                    android:id="@+id/choose_user_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_baseline_person_100"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/roundcorner"
+                    >
+                </ImageButton>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="User"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:layout_below="@id/choose_user_icon"
+                    android:layout_alignLeft="@id/choose_user_icon"
+                    android:layout_alignRight="@id/choose_user_icon"
+                    ></TextView>
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:id="@+id/choose_fireman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/choose_user"
+                android:outlineProvider="bounds"
+                android:layout_margin="11dp"
+                android:padding="10dp"
+                android:background="@drawable/roundcorner">
+                <ImageButton
+                    android:id="@+id/choose_fireman_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
+                    android:src="@drawable/ic_baseline_local_fire_department_100"
+                    android:layout_marginHorizontal="10dp"
+                    android:background="@drawable/roundcorner"
+                    >
+                </ImageButton>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Fireman"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:layout_below="@id/choose_fireman_icon"
+                    android:layout_alignLeft="@id/choose_fireman_icon"
+                    android:layout_alignRight="@id/choose_fireman_icon"
+                    ></TextView>
+            </RelativeLayout>
+        </RelativeLayout>
+        <Button
+            android:id="@+id/choose_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/choose_options"
+            android:layout_centerHorizontal="true"
+            android:layout_marginHorizontal="20dp"
+            android:visibility="invisible">
+
+        </Button>
+
+    </RelativeLayout>
+
+
+
+</RelativeLayout>
