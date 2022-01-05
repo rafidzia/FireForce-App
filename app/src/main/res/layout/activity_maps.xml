@@ -34,20 +34,20 @@
         android:outlineProvider="bounds"
         android:elevation="20dp"
         android:padding="20dp">
+
         <TextView
             android:id="@+id/user_distance_remaining"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="13 KM"
+            android:text="-"
             android:textColor="@color/white"
-            android:textSize="50dp"
-            />
+            android:textSize="50dp" />
         <TextView
             android:id="@+id/user_fireman_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/user_distance_remaining"
-            android:text="Pemadam Pos A"
+            android:text="-"
             android:textColor="@color/white"
             android:textSize="30dp"
             />
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/user_fireman_name"
-            android:text="Estimated 13 mins"
+            android:text="Estimated -"
             android:textColor="@color/white"
             android:textSize="20dp"
             />

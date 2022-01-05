@@ -44,6 +44,9 @@ public class HomeFiremanActivity extends AppCompatActivity {
     Boolean isOnFire = false;
     String demand = "";
     Cursor result;
+    int stateZoom1 = 0;
+
+    final Handler handlerOne = new Handler();
 
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -74,29 +77,7 @@ public class HomeFiremanActivity extends AppCompatActivity {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLocation();
 
-        final Handler handlerOne = new Handler();
-        handlerOne.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Cursor result1 = mydb.rawQuery("select * from place", null);
-                result1.moveToFirst();
-                if(result1.getInt(5) > 0 && result1.getInt(4) > 0){
-                    fetchLocation();
-                    JSONObject dataB = new JSONObject();
-                    try {
-                        dataB.put("latitude", currentLocation.getLatitude());
-                        dataB.put("longitude", currentLocation.getLongitude());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                    mSocket.emit("firemanStreamLocation", dataB);
-                }
-                handlerOne.postDelayed(this, 5000);
-            }
-        }, 5000);
-
-
+        handlerOne.postDelayed(asd, 10000);
 
         JSONObject dataA = new JSONObject();
         try {
@@ -163,6 +144,7 @@ public class HomeFiremanActivity extends AppCompatActivity {
         execButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                handlerOne.removeCallbacks(asd);
                 startActivity(new Intent(getApplicationContext(), MapsFiremanActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 finish();
             }
@@ -171,6 +153,7 @@ public class HomeFiremanActivity extends AppCompatActivity {
         settingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                handlerOne.removeCallbacks(asd);
                 startActivity(new Intent(getApplicationContext(), SettingActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 finish();
             }
@@ -211,12 +194,31 @@ public class HomeFiremanActivity extends AppCompatActivity {
             public void onSuccess(Location location) {
                 if (location != null) {
                     currentLocation = location;
-//                    Toast.makeText(getApplicationContext(), currentLocation.getLatitude() + "" + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-//                    SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.myMap);
-//                    assert supportMapFragment != null;
-//                    supportMapFragment.getMapAsync(MainActivity.this);
                 }
             }
         });
     }
+
+    private Runnable asd = new Runnable() {
+        @Override
+        public void run() {
+            fetchLocation();
+            Cursor result1 = mydb.rawQuery("select * from place", null);
+            result1.moveToFirst();
+            if(result1.getInt(5) > 0 && result1.getInt(4) > 0){
+                JSONObject dataB = new JSONObject();
+                try {
+                    dataB.put("id", result1.getString(0));
+                    dataB.put("token", result1.getString(3));
+                    dataB.put("latitude", currentLocation.getLatitude());
+                    dataB.put("longitude", currentLocation.getLongitude());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                mSocket.emit("firemanStreamLocation", dataB);
+            }
+            handlerOne.postDelayed(this, 5000);
+        }
+    };
 }

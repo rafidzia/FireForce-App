@@ -10,6 +10,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,12 +33,16 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.fireforce.databinding.ActivityMapsFiremanBinding;
+import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -55,6 +63,10 @@ public class MapsFiremanActivity extends FragmentActivity implements OnMapReadyC
 
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
+    int stateZoom = 0;
+    int stateZoom1 = 0;
+
+    final Handler handlerOne = new Handler();
 
     private static final int REQUEST_CODE = 101;
 
@@ -66,9 +78,9 @@ public class MapsFiremanActivity extends FragmentActivity implements OnMapReadyC
         setContentView(binding.getRoot());
 
 //         Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+//        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+//                .findFragmentById(R.id.map);
+//        mapFragment.getMapAsync(this);
 
         fireforceApp app = (fireforceApp) getApplication();
         mSocket = app.getSocket();
@@ -117,27 +129,8 @@ public class MapsFiremanActivity extends FragmentActivity implements OnMapReadyC
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         fetchLocation();
 
-        final Handler handlerOne = new Handler();
-        handlerOne.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Cursor result1 = mydb.rawQuery("select * from place", null);
-                result1.moveToFirst();
-                if(result1.getInt(5) > 0 && result1.getInt(4) > 0){
-                    fetchLocation();
-                    JSONObject dataB = new JSONObject();
-                    try {
-                        dataB.put("latitude", currentLocation.getLatitude());
-                        dataB.put("longitude", currentLocation.getLongitude());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
 
-                    mSocket.emit("firemanStreamLocation", dataB);
-                }
-                handlerOne.postDelayed(this, 5000);
-            }
-        }, 5000);
+        handlerOne.postDelayed(asd, 10000);
 
 
         fireExtinguished.setOnClickListener(new View.OnClickListener() {
@@ -169,6 +162,7 @@ public class MapsFiremanActivity extends FragmentActivity implements OnMapReadyC
                                             MapsFiremanActivity.this.runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
+                                                    Toast.makeText(MapsFiremanActivity.this, "Api Sudah Dipadamkan", Toast.LENGTH_SHORT).show();
                                                     mydb.execSQL("update place set exec=?", new Boolean[]{false});
                                                     startActivity(new Intent(MapsFiremanActivity.this, HomeFiremanActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                                                     finish();
@@ -205,16 +199,72 @@ public class MapsFiremanActivity extends FragmentActivity implements OnMapReadyC
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        mMap = googleMap;
+        if(stateZoom == 0){
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 14));
+        }
+
+        mSocket.on("firemanStreamLocationResult", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                MapsFiremanActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        JSONObject dataC = (JSONObject) args[0];
+                        Double duration = 0.0;
+                        Double distance = 0.0;
+                        JSONArray coordinates = new JSONArray();
+                        try {
+                            duration = dataC.getDouble("duration");
+                            distance = dataC.getDouble("distance");
+                            coordinates = dataC.getJSONArray("coordinates");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        distanceRemaining.setText(String.valueOf((float)(distance/1000)) + " km");
+                        timeRemaining.setText("Estimated " + String.valueOf((float)(duration/60)) + " mins");
+
+                        mMap.clear();
+                        JSONArray origin = coordinates.optJSONArray(0);
+                        JSONArray destination = coordinates.optJSONArray(coordinates.length() - 1);
+                        try {
+                            LatLng selfLocation = new LatLng(origin.getDouble(1), origin.getDouble(0));
+                            mMap.addMarker(new MarkerOptions().position(selfLocation).title("Self Location")).setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_asd));
+                            if(stateZoom == 0){
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selfLocation, 15));
+                                stateZoom++;
+                            }
+
+                            LatLng targetLocation = new LatLng(destination.getDouble(1), destination.getDouble(0));
+                            mMap.addMarker(new MarkerOptions().position(targetLocation).title("Target Location"));
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        PolylineOptions polyopt = new PolylineOptions();
+
+                        for(int i = 0; i < coordinates.length(); i++){
+                            JSONArray polylatlng = coordinates.optJSONArray(i);
+                            try {
+                                polyopt.add(new LatLng(polylatlng.getDouble(1), polylatlng.getDouble(0)));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        polyopt.width(8f);
+                        polyopt.color(R.color.purple_500);
+                        mMap.addPolyline(polyopt);
+                    }
+                });
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
+        handlerOne.removeCallbacks(asd);
         startActivity(new Intent(getApplicationContext(), HomeFiremanActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
         finish();
     }
@@ -233,11 +283,64 @@ public class MapsFiremanActivity extends FragmentActivity implements OnMapReadyC
                 if (location != null) {
                     currentLocation = location;
 //                    Toast.makeText(getApplicationContext(), currentLocation.getLatitude() + "" + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-//                    SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-//                    assert supportMapFragment != null;
-//                    supportMapFragment.getMapAsync(MapsFiremanActivity.this);
+
+                    if(stateZoom1 == 0){
+                        SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+                        assert supportMapFragment != null;
+                        supportMapFragment.getMapAsync(MapsFiremanActivity.this);
+
+                        Cursor result1 = mydb.rawQuery("select * from place", null);
+                        result1.moveToFirst();
+                        if(result1.getInt(5) > 0 && result1.getInt(4) > 0){
+                            JSONObject dataB = new JSONObject();
+                            try {
+                                dataB.put("id", result1.getString(0));
+                                dataB.put("token", result1.getString(3));
+                                dataB.put("latitude", currentLocation.getLatitude());
+                                dataB.put("longitude", currentLocation.getLongitude());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            mSocket.emit("firemanStreamLocation", dataB);
+                        }
+
+                        stateZoom1++;
+                    }
                 }
             }
         });
     }
+
+    public static Bitmap loadBitmapFromView(View v) {
+        Bitmap b = Bitmap.createBitmap( v.getLayoutParams().width, v.getLayoutParams().height, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        v.layout(v.getLeft(), v.getTop(), v.getRight(), v.getBottom());
+        v.draw(c);
+        return b;
+    }
+
+    private Runnable asd = new Runnable() {
+        @Override
+        public void run() {
+            fetchLocation();
+            Cursor result1 = mydb.rawQuery("select * from place", null);
+            result1.moveToFirst();
+            if(result1.getInt(5) > 0 && result1.getInt(4) > 0){
+
+                JSONObject dataB = new JSONObject();
+                try {
+                    dataB.put("id", result1.getString(0));
+                    dataB.put("token", result1.getString(3));
+                    dataB.put("latitude", currentLocation.getLatitude());
+                    dataB.put("longitude", currentLocation.getLongitude());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                mSocket.emit("firemanStreamLocation", dataB);
+            }
+            handlerOne.postDelayed(this, 5000);
+        }
+    };
 }

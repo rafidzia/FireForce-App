@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/fireman_distance_remaining"
-            android:text="Gedung A"
+            android:text="-"
             android:textColor="@color/white"
             android:textSize="30dp"
             />
@@ -56,7 +56,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/fireman_building_name"
-            android:text="Jl. Arif Rachman Hakim"
+            android:text="-"
             android:textColor="@color/white"
             android:textSize="20dp"
             />
@@ -69,15 +69,15 @@
             android:textColor="@color/white"
             android:textSize="20dp"
             />
+
         <Button
             android:id="@+id/fireman_fire_extinguished"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/white"
             android:layout_alignParentBottom="true"
+            android:backgroundTint="@color/white"
             android:text="Api Sudah Dipadamkan"
-            android:textColor="@color/black"
-            />
+            android:textColor="@color/black" />
 
     </RelativeLayout>
 
